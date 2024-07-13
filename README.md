@@ -39,8 +39,11 @@ The Admin Panel should be available at:
  localhost:8000/admin
 ```
 You can add/update/delete your desired products in Products.
+
 You can add/update/delete your orders in Orderss.
+
 You can add/update/delete Order tracking updates in Order Updates. So User can see those when they track their order.
+
 You can see Contat Froms in Contacts whenever a user fills a contact form.
 ![image](https://github.com/user-attachments/assets/04fcdcdf-d5d6-48e5-accd-c75567b0c62e)
 
