@@ -9,7 +9,7 @@ To set up the project locally, follow these steps:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/huzaifa113/Django-.git
+git clone https://github.com/huzaifa113/Django-Ecommerce-Website.git
 cd repository
 ```
 
@@ -74,3 +74,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 This README provides an overview of the project, installation instructions, usage information, and encourages contributions.
+Note: This project is a dummy project not finalized yet.
