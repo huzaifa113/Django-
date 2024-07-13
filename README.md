@@ -29,10 +29,21 @@ Run the development server:
 ```bash
 python manage.py runserver
 ```
-The backend should be available at
+The backend should be available at:
 ```bash
  localhost:8000/shop
 ```
+ Create a SuperUser first then log into admin panel and add the products to your need.
+The Admin Panel should be available at:
+```bash
+ localhost:8000/admin
+```
+You can add/update/delete your desired products in Products.
+You can add/update/delete your orders in Orderss.
+You can add/update/delete Order tracking updates in Order Updates. So User can see those when they track their order.
+You can see Contat Froms in Contacts whenever a user fills a contact form.
+![image](https://github.com/user-attachments/assets/04fcdcdf-d5d6-48e5-accd-c75567b0c62e)
+
 # Product Listing
 Users can browse through various products available on the website.
 ![image](https://github.com/user-attachments/assets/ece344b3-9fb8-45d1-b30c-7fe1f025a008)
