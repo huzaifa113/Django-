@@ -54,7 +54,7 @@
                 <label for="inputZip">Phone Number</label>
                 <input type="tel" class="form-control" id="phone" name="phone">
             </div>
-            <button type="submit" class="btn btn-primary">Place Order</button>
+            <button type="submit" class="btn btn-success">Place Order</button>
         </form>
     </div>
 </div>
@@ -82,7 +82,7 @@ if ($.isEmptyObject(cart)) {
         totalPrice = totalPrice + qty * itemPrice
         mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
                     ${name}
-                    <span class="badge badge-primary badge-pill">${qty}</span>
+                    <span class="badge badge-success badge-pill">${qty}</span>
                 </li>`
         $('#items').append(mystr);
     }
@@ -91,7 +91,7 @@ document.getElementById('cart').innerHTML = sum;
 document.getElementById('totalPrice').innerHTML = totalPrice;
 $('#itemsJson').val(JSON.stringify(cart));
 {% if thank %}
-alert('Thanks for ordering with us. Your order is is {{id}}. Use it to track your order using our order tracker');
+alert('Thanks for ordering with us. Your order is {{id}}. Use it to track your order using our order tracker');
 localStorage.clear();
 document.location = "/shop";
 {% endif %}

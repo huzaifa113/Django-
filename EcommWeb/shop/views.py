@@ -3,9 +3,10 @@ from .models import Product, Contact, Orders, OrderUpdate
 from math import ceil
 import json
 
+
 # Create your views here.
 from django.http import HttpResponse
-
+MERCHANT_KEY = 'Your-Merchant-Key-Here'
 
 def index(request):
     allProds = []
@@ -19,10 +20,9 @@ def index(request):
     params = {'allProds':allProds}
     return render(request, 'shop/index.html', params)
 
-
 def searchMatch(query, item):
     '''return true only if query matches the item'''
-    if query in item.desc.lower() or query in item.product_name.lower() or query in item.category.lower() or query in item.subcategory.lower():
+    if query.lower() in item.desc.lower() or query.lower() in item.product_name.lower() or query.lower() in item.category.lower():
         return True
     else:
         return False
@@ -51,6 +51,7 @@ def about(request):
 
 
 def contact(request):
+    thank = False
     if request.method=="POST":
         name = request.POST.get('name', '')
         email = request.POST.get('email', '')
@@ -58,7 +59,8 @@ def contact(request):
         desc = request.POST.get('desc', '')
         contact = Contact(name=name, email=email, phone=phone, desc=desc)
         contact.save()
-    return render(request, 'shop/contact.html')
+        thank = True
+    return render(request, 'shop/contact.html', {'thank': thank})
 
 
 def tracker(request):
@@ -89,21 +91,24 @@ def productView(request, myid):
     return render(request, 'shop/prodView.html', {'product':product[0]})
 
 
-
 def checkout(request):
     if request.method=="POST":
-        items_json= request.POST.get('itemsJson', '')
-        name=request.POST.get('name', '')
-        email=request.POST.get('email', '')
-        address=request.POST.get('address1', '') + " " + request.POST.get('address2', '')
-        city=request.POST.get('city', '')
-        state=request.POST.get('state', '')
-        zip_code=request.POST.get('zip_code', '')
-        phone=request.POST.get('phone', '')
-
-        order = Orders(items_json= items_json, name=name, email=email, address= address, city=city, state=state, zip_code=zip_code, phone=phone)
+        items_json = request.POST.get('itemsJson', '')
+        name = request.POST.get('name', '')
+        email = request.POST.get('email', '')
+        address = request.POST.get('address1', '') + " " + request.POST.get('address2', '')
+        city = request.POST.get('city', '')
+        state = request.POST.get('state', '')
+        zip_code = request.POST.get('zip_code', '')
+        phone = request.POST.get('phone', '')
+        order = Orders(items_json=items_json, name=name, email=email, address=address, city=city,
+                       state=state, zip_code=zip_code, phone=phone)
         order.save()
-        thank=True
-        id=order.order_id
-        return render(request, 'shop/checkout.html', {'thank':thank, 'id':id})
+        update = OrderUpdate(order_id=order.order_id, update_desc="The order has been placed")
+        update.save()
+        thank = True
+        id = order.order_id
+        return render(request, 'shop/checkout.html',{'thank':thank, 'id': id})
     return render(request, 'shop/checkout.html')
+
+
