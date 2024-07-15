@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from .models import Product, Contact, Orders, OrderUpdate
 from math import ceil
+from django.http import HttpResponse
 import json
 
 
 # Create your views here.
-from django.http import HttpResponse
-MERCHANT_KEY = 'Your-Merchant-Key-Here'
 
 def index(request):
     allProds = []
