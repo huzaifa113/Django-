@@ -56,7 +56,8 @@ Users can browse through various products available on the website.
 
 # Quick View
 Quick View Page for Product Details
-![image](https://github.com/user-attachments/assets/530ec7d7-c4c6-4a0b-ae3a-e6e7e6e0e7d6)
+![image](https://github.com/user-attachments/assets/067c9738-2541-401b-b46f-14fde1a520f0)
+
 
 # Search Product
 Search any product with any keyword
