@@ -68,6 +68,9 @@ Search any product with any keyword
 Users can add products to their cart, view their cart, and proceed to checkout.
 ![image](https://github.com/user-attachments/assets/24f4ae54-4ab9-47c7-882e-70cdbe507c69)
 
+# Checkout
+User can check their cart and place an order by filling the details
+![image](https://github.com/user-attachments/assets/4f8b7471-183c-421e-9b52-4bc29c11d0f9)
 
 # Order Tracking
 Users can track their orders by entering their order ID and email address.
