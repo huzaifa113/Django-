@@ -1,8 +1,9 @@
 {% extends 'shop/basic.html' %}
 
 {% block title%} {{product.product_name}}Prod - My Ecomm Web{% endblock %}
+
 {% block css%}
-/* Basic Styling */
+<style>
 html, body {
   height: 100%;
   width: 100%;
@@ -15,6 +16,7 @@ html, body {
   margin: 0 auto;
   padding: 15px;
   display: flex;
+  /*border-bottom: 2px solid #E1E8EE;*/
 }
 
 /* Columns */
@@ -28,7 +30,6 @@ html, body {
   margin-top: 60px;
 }
 
-
 /* Left Column */
 .left-column img {
   width: 50%;
@@ -38,14 +39,13 @@ html, body {
   transition: all 0.3s ease;
 }
 
-
-
 /* Right Column */
 /* Product Description */
 .product-description {
   border-bottom: 1px solid #E1E8EE;
   margin-bottom: 20px;
 }
+
 .product-description span {
   font-size: 12px;
   color: #358ED7;
@@ -53,12 +53,14 @@ html, body {
   text-transform: uppercase;
   text-decoration: none;
 }
+
 .product-description h1 {
   font-weight: 300;
   font-size: 52px;
   color: #43484D;
   letter-spacing: -2px;
 }
+
 .product-description p {
   font-size: 16px;
   font-weight: 300;
@@ -67,8 +69,7 @@ html, body {
 }
 
 /* Product Configuration */
-.product-color span,
-.cable-config span {
+.product-color span, .cable-config span {
   font-size: 14px;
   font-weight: 400;
   color: #86939E;
@@ -115,7 +116,6 @@ html, body {
 }
 
 .color-choose input[type="radio"]:checked + label span {
-  background-image: url(images/check-icn.svg);
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -172,7 +172,7 @@ html, body {
 /* Product Price */
 .product-price {
   display: flex;
-  align-items: center;
+  align-items: center; 
 }
 
 .product-price span {
@@ -223,22 +223,63 @@ html, body {
   }
 }
 
-{% endblock%}
-{% load static %}
+/*For carousel*/
+.col-md-3
+{
+display: inline-block;
+margin-left:-4px;
+}
+.carousel-indicators .active {
+background-color: grey;
+}
+.col-md-3 img{
+width: 170px;
+height: 225px;
+}
+body .carousel-indicator li{
+background-color: grey;
+}
+.carousel-indicators{
+bottom: -10%;
+}
+body .carousel-control-prev-icon,
+body .carousel-control-next-icon{
+background-color: grey;
+}
+.carousel-control-prev,
+.carousel-control-next{
+top: auto;
+bottom: auto;
+padding-top: 222px;
+width: 5%;
 
+}
+.carousel-control-prev {
+left: 2%; 
+}  
+.carousel-control-next {
+right: 2%; 
+}
+body .no-padding{
+padding-left: 0,
+padding-right: 0;
+}
+</style>
+{% endblock%}
+
+
+
+{% load static %}
 {% block body %}
   <body>
     <main class="container">
-
-      <!-- Left Column / Headphones Image -->
+      <!-- Left Column / Image -->
       <div class="left-column">
         <img src="/media/{{product.image}}" width="233px" height="385px">
       </div>
 
-
       <!-- Right Column -->
       <div class="right-column">
-
         <h5>{{product.product_name}}</h5>
 
         <!-- Product Description -->
@@ -252,7 +293,6 @@ html, body {
           <!-- Product Color -->
           <div class="product-color">
             <span>Color</span>
-
             <div class="color-choose">
               <div>
                 <input data-image="red" type="radio" id="red" name="color" value="red" checked>
@@ -267,20 +307,16 @@ html, body {
                 <label for="black"><span></span></label>
               </div>
             </div>
-
           </div>
 
           <!-- Cable Configuration -->
           <div class="cable-config">
             <span>Cable configuration</span>
-
             <div class="cable-choose">
               <button>Straight</button>
               <button>Coiled</button>
               <button>Long-coiled</button>
             </div>
-
-            <a href="#">How to configurate your headphones</a>
           </div>
         </div>
 
@@ -292,46 +328,109 @@ html, body {
       </div>
     </main>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" charset="utf-8"></script>
-    <script src="script.js" charset="utf-8"></script>
+    <div class="container-fluid">
+      <!--Slideshow starts here -->
+      {% for product, range, nSlides in allProds %}
+      <h5 class="mt-4 ml-4">Similar Items - {{product.0.category}}</h5>
+      <div class="row">
+          <div id="demo{{forloop.counter}}" class="col carousel slide my-3" data-ride="carousel">
+              <ul class="carousel-indicators">
+                  <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
+                  {% for i in range %}
+                  <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}"></li>
+                  {% endfor %}
+              </ul>
+              <div class="container carousel-inner no-padding">
+                  <div class="carousel-item active">
+                      {% for i in product %}
+                      <div class="col-xs-3 col-sm-3 col-md-3">
+                          <div class="card align-items-center" style="width: 18rem;">
+                              <img src='/media/{{i.image}}' class="card-img-top" alt="...">
+                              <div class="card-body">
+                                  <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
+                                  <p class="card-text">{{i.desc|slice:"0:53"}}...</p>
+                                  <h6 class="card-title" >Price: <span id="pricepr{{i.id}}">{{i.price}}</span></h6>
+                                  <span id="divpr{{i.id}}" class="divpr">
+                                      <button id="pr{{i.id}}" class="btn btn-success cart">Add To Cart</button>
+                                  </span>
+                                  <a href="/shop/products/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-success cart">QuickView</button></a>
+                              </div>
+                          </div>
+                      </div>
+                      {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+                  </div>
+                  <div class="carousel-item">
+                      {% endif %}
+                      {% endfor %}
+                  </div>
+              </div>
+          </div>
+          <!-- left and right controls for the slide -->
+          <a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+          </a>
+          <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
+              <span class="carousel-control-next-icon"></span>
+          </a>
+      </div>
+      {% endfor %}
+  </div>
   </body>
-
-
-
-
 {% endblock %}
-
 
 
 
 {% block js %}
 <script>
-console.log('working');
-if(localStorage.getItem('cart') == null){
-var cart = {};
-}
-else
-{
-cart = JSON.parse(localStorage.getItem('cart'));
-document.getElementById('cart').innerHTML = Object.keys(cart).length;
-}
-$('.cart').click(function(){
-console.log('clicked');
-var idstr = this.id.toString();
-console.log(idstr);
-if (cart[idstr] !=undefined){
-cart[idstr] = cart[idstr] + 1;
-}
-else
-{
-cart[idstr] = 1;
-}
-console.log(cart);
-localStorage.setItem('cart', JSON.stringify(cart));
-document.getElementById('cart').innerHTML = Object.keys(cart).length;
-});
-$('#popcart').popover();
-document.getElementById("popcart").setAttribute('data-content', '<h5>Cart for your items in my shopping cart</h5>');
+  console.log('working');
+  $('#popcart').popover();
+  updatePopover(cart);
+  // Updating Popover when item is added
+  if(localStorage.getItem('cart') == null){
+    var cart = {};
+  }
+  else
+  {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  }
+  
+
+  function updatePopover(cart) {
+    console.log('We are inside updatePopover');
+    var popStr = "";
+    popStr = popStr + "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
+    var i = 1;
+    for (var item in cart) {
+        popStr = popStr + "<b>" + i + "</b>. ";
+        popStr = popStr + dcart[item][1] + "... Qty: " + cart[item][0] + '<br>';
+        i = i + 1;
+    }
+    popStr = popStr + "</div> <a href='/shop/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-success' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+    console.log(popStr);
+    document.getElementById('popcart').setAttribute('data-content', popStr);
+    $('#popcart').popover('show');
+  }
+
+
+  $('.cart').click(function(){
+  console.log('clicked');
+  var idstr = this.id.toString();
+  console.log(idstr);
+  if (cart[idstr] !=undefined){
+    cart[idstr] = cart[idstr] + 1;
+  }
+  else
+  {
+    cart[idstr] = 1;
+  }
+  console.log(cart);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  });
+
+
+  $('#popcart').popover();
+  document.getElementById("popcart").setAttribute('data-content', '<h5>Cart for your items in my shopping cart</h5>');
 </script>
 {% endblock %}

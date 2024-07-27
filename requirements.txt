@@ -1,5 +1,5 @@
 dj-database-url
-Django>=3.2,<4
+Django>=5.0.7,<4
 django-allauth==0.54.0
 django-cors-headers
 django-rest-auth

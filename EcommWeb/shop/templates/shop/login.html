@@ -1,0 +1,102 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} {{product.product_name}}Login - My Ecomm Web{% endblock %}
+
+{% block css%}
+<style>
+  @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+  .login-page {
+    width: 360px;
+    padding: 8% ;
+    margin: auto;
+  }
+  
+  .form {
+    position: relative;
+    max-width: 360px;
+    margin: auto;
+    margin-top: 50px;
+    padding: 45px;
+    text-align: center;
+    border-radius: 55px;
+    background: #FFFFFF;
+    box-shadow:  28px 28px 52px #1f2120, -28px -28px 52px #353736;
+  }
+  
+  .form input {
+    font-family: "Roboto", sans-serif;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  
+  .form button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background-color:#4CAF50;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+  }
+  
+  .form .message {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+  }
+  
+  .form .message a {
+    color: #4CAF50;
+  }
+  
+  .container {
+    position: relative;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  body {
+    background: #2a2c2b;
+  }
+</style>
+{% endblock%}
+
+{% block navbar %}
+{{ block.super }}
+{% endblock %}
+
+{% block body %}
+  <div class="login-page">
+    <div class="form">
+      <div class="login">
+        <div class="login-header">
+          <h3>LOGIN</h3>
+          <p>Please enter your credentials to login.</p>
+        </div>
+      </div>
+      {% if messages %}
+      <div class="alert alert-primary" role="alert">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+      </div>
+      {% endif %}
+      <form method="post" class="login-form" onsubmit="return validateLoginForm()">        {% csrf_token %}
+        <input type="text" name="username" id="1" value="" placeholder="Enter Username*" required> <br><br>
+        <input type="password" name="password" id="2" value="" placeholder="Enter Password*" required>  <br><br>
+        <button type="submit">Login</button>
+        <p class="message">Not registered? <a href="/shop/register">Create an account</a></p>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

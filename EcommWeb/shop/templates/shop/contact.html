@@ -1,6 +1,7 @@
 {% extends 'shop/basic.html' %}
 
 {% block title%} Contact - My Ecomm Web{% endblock %}
+
 {% block body %}
 <div class="container my-3">
     <h3>Contact Us</h3>
@@ -26,13 +27,14 @@
   </div>
         <button type="submit" class="btn btn-success">Submit</button>
 </form>
-
-
-
 </div>
+{% endblock %}
 
+
+
+{%block js%}
 <script>
-// Showwing alert
+// Showing alert
   document.addEventListener('DOMContentLoaded', function() {
       var form = document.getElementById('contactForm');
       if (form) {
@@ -45,7 +47,6 @@
       }
   });
   </script>
-  
 {% endblock %}
 
 

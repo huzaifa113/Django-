@@ -1,6 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Create your models here.
+
+
 class Product(models.Model):
     product_id = models.AutoField
     product_name = models.CharField(max_length=50)
@@ -22,11 +26,12 @@ class Contact(models.Model):
     phone = models.CharField(max_length=70, default="")
     desc = models.CharField(max_length=500, default="")
 
-
     def __str__(self):
         return self.name
 
+
 class Orders(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     order_id = models.AutoField(primary_key=True)
     items_json = models.CharField(max_length=5000)
     name = models.CharField(max_length=90)

@@ -1,11 +1,80 @@
-from django.shortcuts import render
-from .models import Product, Contact, Orders, OrderUpdate
-from math import ceil
+from django.contrib.auth import authenticate, login as auth_login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from .models import *
+from math import ceil
 import json
 
 
 # Create your views here.
+
+
+def register_view(request):
+    if request.method == "POST":
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        email = request.POST.get('Email')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username already Taken')
+            return render(request, 'shop/register.html')
+
+
+        user = User.objects.create(
+            first_name = first_name,
+            last_name = last_name,
+            username = username,
+            email = email
+        )
+        
+        user.set_password(password)
+        user.save()
+        return redirect('/shop/login')
+    
+    return render(request, 'shop/register.html')
+    
+
+        
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if not username:
+            messages.error(request, 'Username is required')
+            return render(request, 'shop/login.html')
+
+        if not password:
+            messages.error(request, 'Password is required')
+            return render(request, 'shop/login.html')
+
+        if not User.objects.filter(username=username).exists():
+            messages.error(request, 'Invalid Username')
+            return render(request, 'shop/login.html')
+
+        user = authenticate(username=username, password=password)
+        if user is None:
+            messages.error(request, 'Invalid Password')
+            return render(request, 'shop/login.html')
+        
+        else:
+            auth_login(request, user)
+            return redirect('/shop/checkout')
+
+    return render(request, 'shop/login.html')
+
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('/shop/checkout')
+
+
 
 def index(request):
     allProds = []
@@ -18,6 +87,8 @@ def index(request):
         allProds.append([prod, range(1, nSlides), nSlides])
     params = {'allProds':allProds}
     return render(request, 'shop/index.html', params)
+
+
 
 def searchMatch(query, item):
     '''return true only if query matches the item'''
@@ -34,7 +105,6 @@ def search(request):
     for cat in cats:
         prodtemp = Product.objects.filter(category=cat)
         prod = [item for item in prodtemp if searchMatch(query, item)]
-
         n = len(prod)
         nSlides = n // 4 + ceil((n / 4) - (n // 4))
         if len(prod) != 0:
@@ -45,8 +115,10 @@ def search(request):
     return render(request, 'shop/search.html', params)
 
 
+
 def about(request):
     return render(request, 'shop/about.html')
+
 
 
 def contact(request):
@@ -60,6 +132,7 @@ def contact(request):
         contact.save()
         thank = True
     return render(request, 'shop/contact.html', {'thank': thank})
+
 
 
 def tracker(request):
@@ -83,13 +156,27 @@ def tracker(request):
     return render(request, 'shop/tracker.html')
 
 
+
 def productView(request, myid):
+    product = Product.objects.get(id=myid)
+    query = product.category
+    allProds = []
+    catprods = Product.objects.values('category', 'id')
+    cats = {item['category'] for item in catprods}
+    for cat in cats:
+        if cat == query:
+            prodtemp = Product.objects.filter(category=cat).exclude(id=myid)  # Exclude the current product
+            prod = list(prodtemp)
+            n = len(prod)
+            nSlides = n // 4 + ceil((n / 4) - (n // 4))
+            if len(prod) != 0:
+                allProds.append([prod, range(1, nSlides), nSlides])
+    
+    return render(request, 'shop/prodView.html', {'product': product, 'allProds': allProds})
 
-    # Fetch the product using the id
-    product = Product.objects.filter(id=myid)
-    return render(request, 'shop/prodView.html', {'product':product[0]})
 
 
+@login_required
 def checkout(request):
     if request.method=="POST":
         items_json = request.POST.get('itemsJson', '')
@@ -109,5 +196,3 @@ def checkout(request):
         id = order.order_id
         return render(request, 'shop/checkout.html',{'thank':thank, 'id': id})
     return render(request, 'shop/checkout.html')
-
-
