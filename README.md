@@ -95,7 +95,8 @@ User have to create an account for ordering
 And after that user can login into their account
 ![image](https://github.com/user-attachments/assets/7087e885-cc9f-4080-bac0-fa9b8d01aa6b)
 
-# Admin can manage users, products, orders, updates in dhango builtin admin panel by creating a superuser and login in to it
+# Admin Panel
+Admin can manage users, products, orders, updates in dhango builtin admin panel by creating a superuser and login in to it
 ![image](https://github.com/user-attachments/assets/8fedbb2c-c354-462a-a084-4569d0dc76d1)
 
 
