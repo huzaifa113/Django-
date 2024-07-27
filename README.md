@@ -44,29 +44,32 @@ You can add/update/delete your orders in Orderss.
 
 You can add/update/delete Order tracking updates in Order Updates. So User can see those when they track their order.
 
-You can see Contat Froms in Contacts whenever a user fills a contact form.
-![image](https://github.com/user-attachments/assets/04fcdcdf-d5d6-48e5-accd-c75567b0c62e)
 
-# Product Listing
+
+# Home Page
 Users can browse through various products available on the website.
-![image](https://github.com/user-attachments/assets/ece344b3-9fb8-45d1-b30c-7fe1f025a008)
-![image](https://github.com/user-attachments/assets/8a3d17bd-ec72-495b-b06a-da43cb734eea)
-![image](https://github.com/user-attachments/assets/85cc8c16-2590-4809-b6e7-4953c4c76901)
-![image](https://github.com/user-attachments/assets/53a43dd4-873b-4f95-b245-e123ca553829)
+![image](https://github.com/user-attachments/assets/f0998a88-cb27-4c9a-8d1c-eaa95d7d67da)
+![image](https://github.com/user-attachments/assets/962dd8ff-b7e4-45a3-961b-0c24b8b4060d)
+![image](https://github.com/user-attachments/assets/9c78a2b1-2672-430a-8b1d-12c7b62fb488)
+![image](https://github.com/user-attachments/assets/5a614c2b-ad6a-4b35-bf28-84534003c317)
+![image](https://github.com/user-attachments/assets/4d041960-e05b-4b40-b2b4-e0ff120ad42e)
+![image](https://github.com/user-attachments/assets/cb25949b-a3b7-4c86-a623-97065c6fa3a6)
+
 
 # Quick View
 Quick View Page for Product Details
-![image](https://github.com/user-attachments/assets/067c9738-2541-401b-b46f-14fde1a520f0)
+![image](https://github.com/user-attachments/assets/d06a5632-c1db-4c78-9482-8e05d3d39657)
+![image](https://github.com/user-attachments/assets/4291fb9e-8d40-49ec-9e7b-6b59c9c1aaf2)
 
 
 # Search Product
 Search any product with any keyword
-![image](https://github.com/user-attachments/assets/1087d9b6-a277-419e-92c2-63ef11486df0)
+![image](https://github.com/user-attachments/assets/51d32360-812c-4ae7-8112-03a8369c42e8)
 
 
 # Shopping Cart
 Users can add products to their cart, view their cart, and proceed to checkout.
-![image](https://github.com/user-attachments/assets/24f4ae54-4ab9-47c7-882e-70cdbe507c69)
+![image](https://github.com/user-attachments/assets/0dfaa437-d98d-4ce3-9b38-a8a8bf479e6b)
 
 # Checkout
 User can check their cart and place an order by filling the details
@@ -84,6 +87,14 @@ Users can contact us using the Contact Us Form
 # About Us
 About Us Page tells about our organization
 ![image](https://github.com/user-attachments/assets/e0407b4f-e905-4518-938f-610a692811e9)
+
+# User Authentication
+User have to create an account for ordering
+![image](https://github.com/user-attachments/assets/641ab93d-9823-4872-84d2-291431157043)
+
+And after that user can login into their account
+![image](https://github.com/user-attachments/assets/7087e885-cc9f-4080-bac0-fa9b8d01aa6b)
+
 
 
 # Contributing
