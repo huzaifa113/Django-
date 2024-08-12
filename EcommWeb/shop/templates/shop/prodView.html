@@ -13,6 +13,7 @@ html, body {
 
 .container {
   max-width: 1200px;
+  height: 450px;
   margin: 0 auto;
   padding: 15px;
   display: flex;
@@ -22,19 +23,21 @@ html, body {
 /* Columns */
 .left-column {
   width: 50%;
+  margin-top: 30px;
   position: relative;
 }
 
 .right-column {
   width: 50%;
   margin-top: 60px;
+  position: relative;
 }
 
 /* Left Column */
 .left-column img {
   width: 50%;
+  height: 100%;
   position: absolute;
-  margin-top: 30px;
   opacity: 1;
   transition: all 0.3s ease;
 }
@@ -66,107 +69,6 @@ html, body {
   font-weight: 300;
   color: #86939E;
   line-height: 24px;
-}
-
-/* Product Configuration */
-.product-color span, .cable-config span {
-  font-size: 14px;
-  font-weight: 400;
-  color: #86939E;
-  margin-bottom: 20px;
-  display: inline-block;
-}
-
-/* Product Color */
-.product-color {
-  margin-bottom: 30px;
-}
-
-.color-choose div {
-  display: inline-block;
-}
-
-.color-choose input[type="radio"] {
-  display: none;
-}
-
-.color-choose input[type="radio"] + label span {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  margin: -1px 4px 0 0;
-  vertical-align: middle;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
-.color-choose input[type="radio"] + label span {
-  border: 2px solid #FFFFFF;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.33);
-}
-
-.color-choose input[type="radio"]#red + label span {
-  background-color: #C91524;
-}
-.color-choose input[type="radio"]#blue + label span {
-  background-color: #314780;
-}
-.color-choose input[type="radio"]#black + label span {
-  background-color: #323232;
-}
-
-.color-choose input[type="radio"]:checked + label span {
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-/* Cable Configuration */
-.cable-choose {
-  margin-bottom: 20px;
-}
-
-.cable-choose button {
-  border: 2px solid #E1E8EE;
-  border-radius: 6px;
-  padding: 13px 20px;
-  font-size: 14px;
-  color: #5E6977;
-  background-color: #fff;
-  cursor: pointer;
-  transition: all .5s;
-}
-
-.cable-choose button:hover,
-.cable-choose button:active,
-.cable-choose button:focus {
-  border: 2px solid #86939E;
-  outline: none;
-}
-
-.cable-config {
-  border-bottom: 1px solid #E1E8EE;
-  margin-bottom: 20px;
-}
-
-.cable-config a {
-  color: #358ED7;
-  text-decoration: none;
-  font-size: 12px;
-  position: relative;
-  margin: 10px 0;
-  display: inline-block;
-}
-.cable-config a:before {
-  content: "?";
-  height: 15px;
-  width: 15px;
-  border-radius: 50%;
-  border: 2px solid rgba(53, 142, 215, 0.5);
-  display: inline-block;
-  text-align: center;
-  line-height: 16px;
-  opacity: 0.5;
-  margin-right: 5px;
 }
 
 /* Product Price */
@@ -277,58 +179,24 @@ padding-right: 0;
       <div class="left-column">
         <img src="/media/{{product.image}}" width="233px" height="385px">
       </div>
+      
 
       <!-- Right Column -->
       <div class="right-column">
-        <h5>{{product.product_name}}</h5>
-
-        <!-- Product Description -->
-        <div class="product-description">
-          <p>{{product.desc}}</p>
-        </div>
-
-        <!-- Product Configuration -->
-        <div class="product-configuration">
-
-          <!-- Product Color -->
-          <div class="product-color">
-            <span>Color</span>
-            <div class="color-choose">
-              <div>
-                <input data-image="red" type="radio" id="red" name="color" value="red" checked>
-                <label for="red"><span></span></label>
+        
+          <div class="card align-items-center" style="width: 80%;">
+              <div class="card-body">
+                <h2 class="card-title" id="namepr{{product.id}}">{{product.product_name}}</h2>
+                <div class="product-description"><p>{{product.desc}}</p></div>
+                <div class="card-title"> <span id="pricepr{{product.id}}"><h4>Price: {{product.price}}</h4></span></div>
+                <span id="divpr{{product.id}}" class="divpr"> <button id="pr{{product.id}}" class="btn btn-success btn-lg btn-block cart">Add To Cart</button> </span>
               </div>
-              <div>
-                <input data-image="blue" type="radio" id="blue" name="color" value="blue">
-                <label for="blue"><span></span></label>
-              </div>
-              <div>
-                <input data-image="black" type="radio" id="black" name="color" value="black">
-                <label for="black"><span></span></label>
-              </div>
-            </div>
           </div>
-
-          <!-- Cable Configuration -->
-          <div class="cable-config">
-            <span>Cable configuration</span>
-            <div class="cable-choose">
-              <button>Straight</button>
-              <button>Coiled</button>
-              <button>Long-coiled</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Product Pricing -->
-        <div class="product-price">
-          <span>Rs.{{product.price}}</span>
-          <a id="pr{{i.id}}" class="btn btn-success cart">Add to cart</a>
-        </div>
+        
       </div>
     </main>
 
-    <div class="container-fluid">
+    <div class="container-fluid mt-4">
       <!--Slideshow starts here -->
       {% for product, range, nSlides in allProds %}
       <h5 class="mt-4 ml-4">Similar Items - {{product.0.category}}</h5>
@@ -381,56 +249,117 @@ padding-right: 0;
 
 
 {% block js %}
+
 <script>
-  console.log('working');
-  $('#popcart').popover();
-  updatePopover(cart);
-  // Updating Popover when item is added
-  if(localStorage.getItem('cart') == null){
-    var cart = {};
-  }
-  else
-  {
-    cart = JSON.parse(localStorage.getItem('cart'));
-    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  {% if msg|length != 0 %}
+  alert('{{msg}}');
+  window.location.href = "/"
+  {% endif %}
+  // Find out the cart items from localStorage
+  if (localStorage.getItem('cart') == null) {
+      var cart = {};
+  } else {
+      cart = JSON.parse(localStorage.getItem('cart'));
+      updateCart(cart);
   }
   
-
-  function updatePopover(cart) {
-    console.log('We are inside updatePopover');
-    var popStr = "";
-    popStr = popStr + "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
-    var i = 1;
-    for (var item in cart) {
-        popStr = popStr + "<b>" + i + "</b>. ";
-        popStr = popStr + dcart[item][1] + "... Qty: " + cart[item][0] + '<br>';
-        i = i + 1;
-    }
-    popStr = popStr + "</div> <a href='/shop/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-success' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
-    console.log(popStr);
-    document.getElementById('popcart').setAttribute('data-content', popStr);
-    $('#popcart').popover('show');
+  // Function to update the cart
+  function updateCart(cart) {
+      var sum = 0;
+      for (var item in cart) {
+          sum += cart[item][0];
+          var itemDiv = document.getElementById('div' + item);
+          if (itemDiv) {
+              itemDiv.innerHTML = "<button id='minus" + item + "' class='btn btn-success minus'>-</button> <span id='val" + item + "'>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-success plus'> + </button>";
+          }
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      document.getElementById('cart').innerHTML = sum;
+      console.log(cart);
+      updatePopover(cart);
   }
 
 
-  $('.cart').click(function(){
-  console.log('clicked');
-  var idstr = this.id.toString();
-  console.log(idstr);
-  if (cart[idstr] !=undefined){
-    cart[idstr] = cart[idstr] + 1;
-  }
-  else
-  {
-    cart[idstr] = 1;
-  }
-  console.log(cart);
-  localStorage.setItem('cart', JSON.stringify(cart));
-  document.getElementById('cart').innerHTML = Object.keys(cart).length;
-  });
-
-
+  // Add Popover to cart
   $('#popcart').popover();
-  document.getElementById("popcart").setAttribute('data-content', '<h5>Cart for your items in my shopping cart</h5>');
-</script>
+  updatePopover();
+
+  // Updating Popover when item is added
+  function updatePopover() {
+      console.log('We are inside updatePopover');
+      var cart = JSON.parse(localStorage.getItem('cart')) || {};
+      var popStr = "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
+      var i = 1;
+      for (var item in cart) {
+          var name = cart[item][1];  // Get the name from the cart object
+          popStr += "<b>" + i + "</b>. " + name.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>';
+          i += 1;
+      }
+      popStr += "</div> <a href='/shop/checkout'><button class='btn btn-success' id='checkout'>Checkout</button></a> <button class='btn btn-success' onclick='clearCart()' id='clearCart'>Clear Cart</button>";
+      console.log(popStr);
+  
+      document.getElementById('popcart').setAttribute('data-content', popStr);
+      $('#popcart').popover('show');
+  }
+  
+  
+  // Function to clear the cart
+  function clearCart() {
+      cart = JSON.parse(localStorage.getItem('cart'));
+      for (var item in cart) {
+          var itemDiv = document.getElementById('div' + item);
+          if (itemDiv) {
+              itemDiv.innerHTML = '<button id="' + item + '" class="btn btn-success cart">Add To Cart</button>';
+          }
+      }
+      localStorage.clear();
+      cart = {};
+      updateCart(cart);
+  }
+  
+  // Event listener for add to cart button
+  $('.divpr').on('click', 'button.cart', function() {
+      var idstr = this.id.toString();
+      if (cart[idstr] != undefined) {
+          qty = cart[idstr][0] + 1;
+      } else {
+          qty = 1;
+          var nameElement = document.getElementById('name' + idstr);
+          var priceElement = document.getElementById('price' + idstr);
+          if (nameElement && priceElement) {
+              name = nameElement.innerHTML;
+              price = priceElement.innerHTML;
+              cart[idstr] = [qty, name, parseInt(price)];
+          }
+      }
+      updateCart(cart);
+  });
+  
+  // Event listener for minus button
+  $('.divpr').on('click', 'button.minus', function() {
+      var idstr = this.id.slice(7);
+      if (cart['pr' + idstr] != undefined) {
+          cart['pr' + idstr][0] = cart['pr' + idstr][0] - 1;
+          cart['pr' + idstr][0] = Math.max(0, cart['pr' + idstr][0]);
+          if (cart['pr' + idstr][0] == 0) {
+              document.getElementById('divpr' + idstr).innerHTML = '<button id="pr' + idstr + '" class="btn btn-success cart">Add to Cart</button>';
+              delete cart['pr' + idstr];
+          } else {
+              document.getElementById('valpr' + idstr).innerHTML = cart['pr' + idstr][0];
+          }
+          updateCart(cart);
+      }
+  });
+  
+  // Event listener for plus button
+  $('.divpr').on('click', 'button.plus', function() {
+      var idstr = this.id.slice(6);
+      if (cart['pr' + idstr] != undefined) {
+          cart['pr' + idstr][0] = cart['pr' + idstr][0] + 1;
+          document.getElementById('valpr' + idstr).innerHTML = cart['pr' + idstr][0];
+          updateCart(cart);
+      }
+  });
+</script>   
+  
 {% endblock %}

@@ -138,12 +138,13 @@ padding-right: 0;
             <div class="container carousel-inner no-padding">
                 <div class="carousel-item active">
                     {% for i in product %}
+                    <a href="/shop/products/{{i.id}}" style="text-decoration:none; color:black;">
                     <div class="col-xs-3 col-sm-3 col-md-3">
                         <div class="card align-items-center" style="width: 18rem;">
                             <img src='/media/{{i.image}}' class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
-                                <p class="card-text">{{i.desc|slice:"0:53"}}...</p>
+                                <p class="card-text">{{i.desc|slice:"0:53"}}...</p> </a>
                                 <h5 class="card-title" ><b>Rs: <span id="pricepr{{i.id}}">{{i.price}}</span></b></h5>
                                 <span id="divpr{{i.id}}" class="divpr">
                                     <button id="pr{{i.id}}" class="btn btn-success cart">Add To Cart</button>
@@ -152,6 +153,7 @@ padding-right: 0;
                             </div>
                         </div>
                     </div>
+                    
                     {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
                 </div>
                 <div class="carousel-item">
@@ -202,26 +204,27 @@ padding-right: 0;
     });
 
 
-    //Add Popover to cart
+    // Add Popover to cart
     $('#popcart').popover();
-    updatePopover(cart);
+    updatePopover();
     // Updating Popover when item is added
-    function updatePopover(cart) {
+    function updatePopover() {
         console.log('We are inside updatePopover');
-        var popStr = "";
-        popStr = popStr + "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
+        var cart = JSON.parse(localStorage.getItem('cart')) || {};
+        var popStr = "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
         var i = 1;
         for (var item in cart) {
-            popStr = popStr + "<b>" + i + "</b>. ";
-            popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>';
-            i = i + 1;
+        var name = cart[item][1];  // Get the name from the cart object
+        popStr += "<b>" + i + "</b>. " + name.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>';
+        i += 1;
         }
-        popStr = popStr + "</div> <a href='/shop/checkout'><button class='btn btn-success' id ='checkout'>Checkout</button></a> <button class='btn btn-success' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+        popStr += "</div> <a href='/shop/checkout'><button class='btn btn-success' id='checkout'>Checkout</button></a> <button class='btn btn-success' onclick='clearCart()' id='clearCart'>Clear Cart</button>";
         console.log(popStr);
+    
         document.getElementById('popcart').setAttribute('data-content', popStr);
         $('#popcart').popover('show');
     }
-    
+
 
     // Clear cart form local storage and update in cart
     function clearCart() {
